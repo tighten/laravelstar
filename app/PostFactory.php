@@ -4,6 +4,7 @@ namespace App;
 
 use App\Author;
 use App\Post;
+use App\Services\Twitter;
 use Exception;
 
 class PostFactory
@@ -24,14 +25,18 @@ class PostFactory
 
     public function makeTwitterFromManualSubmission($request)
     {
-        // @todo: Update to pull the tweet if we're creating
-        return Post::firstOrCreate([
+        return Post::firstOrCreateCallback([
             'type' => 'twitter',
             'source_url' => $request->source_url,
-        ], [
-            // 'content' => '@todo pull tweet content from api',
-            'author_id' => $this->authorFromTwitter($request),
-        ]);
+        ], function () use ($request) {
+            $tweet = app(Twitter::class)->get($request->source_url);
+
+            return [
+                'content' => $tweet->content, 
+                // @todo update this method to take the tweet instead
+                'author_id' => $this->authorFromTwitter($request)->id,
+            ];
+        });
     }
 
     private function authorFromTwitter($request)

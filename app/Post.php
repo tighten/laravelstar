@@ -45,4 +45,27 @@ class Post extends Model
         return app(PostFactory::class)
             ->makeFromManualSubmission($request);
     }
+
+    /**
+     * Get the first record matching the attributes or create it.
+     *
+     * @param  array  $attributes
+     * @param  array|callable  $values
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public static function firstOrCreateCallback(array $attributes, $values = [])
+    {
+        if (! is_null($instance = self::where($attributes)->first())) {
+            return $instance;
+        }
+
+        // callable check?
+        if (! is_array($values)) {
+            $values = $values();
+        }
+
+        return tap(self::newModelInstance($attributes + $values), function ($instance) {
+            $instance->save();
+        });
+    }
 }

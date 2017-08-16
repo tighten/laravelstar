@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Author;
 use App\Post;
 use App\Submission;
 use App\User;
@@ -27,6 +28,7 @@ class PostSubmissionTest extends TestCase
         $user->submit(Post::makeFromManualSubmission($request));
 
         $this->assertEquals(Post::count(), 1);
+        $this->assertEquals('twitter', Post::first()->type);
     }
 
     /** @test */
@@ -77,16 +79,56 @@ class PostSubmissionTest extends TestCase
     /** @test */
     function if_author_isnt_in_our_system_submission_creates()
     {
+        $user = factory(User::class)->create();
 
+        $request = new Request;
+        $request->type = 'twitter';
+        $request->source_url = 'http://twitter.com/mytweets/12345';
+
+        $user->submit(Post::makeFromManualSubmission($request));
+
+        $this->assertEquals(1, Author::count());
+        $this->assertEquals('mytweets', Author::first()->twitter);
     }
 
+    /** @test */
     function if_author_exists_second_author_isnt_created()
     {
+        $user = factory(User::class)->create();
 
+        $request = new Request;
+        $request->type = 'twitter';
+        $request->source_url = 'http://twitter.com/mytweets/12345';
+
+        $user->submit(Post::makeFromManualSubmission($request));
+
+        $request = new Request;
+        $request->type = 'twitter';
+        $request->source_url = 'http://twitter.com/mytweets/67890';
+
+        $user->submit(Post::makeFromManualSubmission($request));
+
+        $this->assertEquals(1, Author::count());
+        $this->assertEquals('mytweets', Author::first()->twitter);
     }
 
+    /** @test */
     function if_user_submits_post_twice_no_duplicate_created()
     {
+        $user = factory(User::class)->create();
 
+        $request = new Request;
+        $request->type = 'twitter';
+        $request->source_url = 'http://twitter.com/mytweets/12345';
+
+        $user->submit(Post::makeFromManualSubmission($request));
+
+        $request = new Request;
+        $request->type = 'twitter';
+        $request->source_url = 'http://twitter.com/mytweets/12345';
+
+        $user->submit(Post::makeFromManualSubmission($request));
+
+        $this->assertEquals(1, Post::count());
     }
 }

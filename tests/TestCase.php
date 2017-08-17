@@ -14,7 +14,7 @@ abstract class TestCase extends BaseTestCase
         $twitter = m::mock(Twitter::class)->shouldIgnoreMissing();
         $twitter->shouldReceive('getTweet')
             ->andReturn((object) ['content' => 'abc']);
-
-        app()->instance(Twitter::class, $twitter);
+        
+        return $twitter;
     }
 }

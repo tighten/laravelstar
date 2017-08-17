@@ -21,7 +21,7 @@ class PostSubmissionTest extends TestCase
     {
         parent::setUp();
 
-        $this->mockTwitter();
+        app()->instance(Twitter::class, $this->mockTwitter());
     }
 
     /** @test */

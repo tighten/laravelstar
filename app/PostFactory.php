@@ -25,18 +25,21 @@ class PostFactory
 
     public function makeTwitterFromManualSubmission($request)
     {
-        return Post::firstOrCreateCallback([
+        return Post::firstOrCreate([
             'type' => 'twitter',
             'source_url' => $request->source_url,
-        ], function () use ($request) {
-            $tweet = app(Twitter::class)->get($request->source_url);
+        ], [
+            'content' => $this->contentFromTwitter($request->source_url),
+            'author_id' => $this->authorFromTwitter($request)->id,
+        ]);
+    }
 
-            return [
-                'content' => $tweet->content, 
-                // @todo update this method to take the tweet instead
-                'author_id' => $this->authorFromTwitter($request)->id,
-            ];
-        });
+    private function contentFromTwitter($sourceUrl)
+    {
+        $split = explode('/', $sourceUrl);
+        $tweet = app(Twitter::class)->getTweet(end($split));
+
+        return $tweet->content;
     }
 
     private function authorFromTwitter($request)

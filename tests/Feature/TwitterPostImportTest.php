@@ -24,7 +24,7 @@ class TwitterPostImportTest extends TestCase
         ];
 
         $twitter = m::mock(Twitter::class);
-        $twitter->shouldReceive('get')->andReturn($fakeTweet);
+        $twitter->shouldReceive('getTweet')->andReturn($fakeTweet);
 
         app()->instance(Twitter::class, $twitter);
 

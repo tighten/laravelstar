@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Author;
 use App\Post;
+use App\Services\Twitter;
 use App\Submission;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -15,6 +16,13 @@ use Tests\TestCase;
 class PostSubmissionTest extends TestCase
 {
     use DatabaseMigrations;
+
+    function setUp()
+    {
+        parent::setUp();
+
+        $this->mockTwitter();
+    }
 
     /** @test */
     function user_can_submit_tweets()

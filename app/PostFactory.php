@@ -25,33 +25,37 @@ class PostFactory
 
     public function makeTwitterFromManualSubmission($request)
     {
-        return Post::firstOrCreate([
+        return Post::firstOrCreateCallback([
             'type' => 'twitter',
             'source_url' => $request->source_url,
-        ], [
-            'content' => $this->contentFromTwitter($request->source_url),
-            'author_id' => $this->authorFromTwitter($request)->id,
-        ]);
+        ], function () use ($request) {
+            $split = explode('/', $request->source_url);
+            $tweet = app(Twitter::class)->getTweet(end($split));
+
+            return [
+                'content' => $tweet->text, 
+                'author_id' => $this->authorFromTweet($tweet), 
+            ];
+        });
     }
 
-    private function contentFromTwitter($sourceUrl)
+    private function authorFromTweet($tweet)
     {
-        $split = explode('/', $sourceUrl);
-        $tweet = app(Twitter::class)->getTweet(end($split));
-
-        return $tweet->content;
-    }
-
-    private function authorFromTwitter($request)
-    {
-        $path = parse_url($request->source_url, PHP_URL_PATH);
-        $username = explode('/', ltrim($path, '/'))[0];
-
         return Author::firstOrCreate([
-            'twitter' => $username
+            'twitter_id' => $tweet->user->id,
         ], [
-            // @todo Full name from the API
-            'name' => app(\Faker\Generator::class)->name,
+            'twitter_screen_name' => $tweet->user->screen_name,
+            'name' => $tweet->user->name,
+            'url' => $this->convertTwitterEntity($tweet->user->url, $tweet->user->entities->url),
         ]);
+    }
+
+    private function convertTwitterEntity($string, $entities)
+    {
+        foreach ($entities->urls as $entity) {
+            $string = str_replace($entity->url, $entity->expanded_url, $string);
+        }
+
+        return $string;
     }
 }

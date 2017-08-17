@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Author;
 use App\Post;
 use App\User;
 use App\Services\Twitter;
@@ -16,18 +17,16 @@ class TwitterPostImportTest extends TestCase
 {
     use DatabaseMigrations;
 
+    function setUp()
+    {
+        parent::setUp();
+
+        app()->instance(Twitter::class, $this->mockTwitter());
+    }
+
     /** @test */
     function tweet_import_gets_content_from_twitter_api()
     {
-        $fakeTweet = (object) [
-            'content' => 'abcdefg'
-        ];
-
-        $twitter = m::mock(Twitter::class);
-        $twitter->shouldReceive('getTweet')->andReturn($fakeTweet);
-
-        app()->instance(Twitter::class, $twitter);
-
         $user = factory(User::class)->create();
 
         $request = new Request;
@@ -36,6 +35,35 @@ class TwitterPostImportTest extends TestCase
 
         $user->submit(Post::makeFromManualSubmission($request));
 
-        $this->assertEquals($fakeTweet->content, Post::first()->content);
+        $this->assertEquals($this->fakeTweet->text, Post::first()->content);
+    }
+
+    /** @test */
+    function tweet_import_gets_author_name_from_twitter()
+    {
+        $user = factory(User::class)->create();
+
+        $request = new Request;
+        $request->type = 'twitter';
+        $request->source_url = 'http://twitter.com/stauffermatt/805940005487132672';
+
+        $user->submit(Post::makeFromManualSubmission($request));
+
+        $this->assertEquals($this->fakeTweet->user->name, Author::first()->name);
+    }
+
+    /** @test */
+    function tweet_import_replaces_twitter_url()
+    {
+        $user = factory(User::class)->create();
+
+        $request = new Request;
+        $request->type = 'twitter';
+        $request->source_url = 'http://twitter.com/stauffermatt/805940005487132672';
+
+        $user->submit(Post::makeFromManualSubmission($request));
+
+        $replacedUrl = current($this->fakeTweet->user->entities->url->urls)->expanded_url;
+        $this->assertEquals($replacedUrl, Author::first()->url);
     }
 }

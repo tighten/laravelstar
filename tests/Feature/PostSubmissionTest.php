@@ -96,7 +96,6 @@ class PostSubmissionTest extends TestCase
         $user->submit(Post::makeFromManualSubmission($request));
 
         $this->assertEquals(1, Author::count());
-        $this->assertEquals('mytweets', Author::first()->twitter);
     }
 
     /** @test */
@@ -117,7 +116,6 @@ class PostSubmissionTest extends TestCase
         $user->submit(Post::makeFromManualSubmission($request));
 
         $this->assertEquals(1, Author::count());
-        $this->assertEquals('mytweets', Author::first()->twitter);
     }
 
     /** @test */

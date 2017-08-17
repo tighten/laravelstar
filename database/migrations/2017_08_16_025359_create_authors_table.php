@@ -16,7 +16,9 @@ class CreateAuthorsTable extends Migration
         Schema::create('authors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('twitter')->nullable();
+            $table->string('url')->nullable();
+            $table->string('twitter_id')->nullable();
+            $table->string('twitter_screen_name')->nullable();
             $table->timestamps();
         });
     }

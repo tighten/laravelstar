@@ -32,7 +32,7 @@ class PostFactory
 
         return [
             'content' => $tweet->text, 
-            'author_id' => $this->authorFromTweet($tweet), 
+            'author_id' => $this->authorFromTweet($tweet)->id, 
         ];
     }
 

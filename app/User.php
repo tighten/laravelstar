@@ -48,4 +48,16 @@ class User extends Authenticatable
             'post_id' => $post->id
         ]);
     }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function like($post)
+    {
+        return $this->likes()->create([
+            'post_id' => $post->id,
+        ]);
+    }
 }

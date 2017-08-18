@@ -26,7 +26,7 @@ class UserInteractingWithPostsTest extends TestCase
         $user->like($post);
 
         $this->assertEquals(1, Like::count());
-        $this->assertTrue($user->likes->contains($post));
+        $this->assertTrue($user->likes->pluck('post_id')->contains($post->id));
         $this->assertTrue($post->likers->contains($user));
     }
 

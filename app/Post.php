@@ -68,4 +68,9 @@ class Post extends Model
             $instance->save();
         });
     }
+
+    public function likers()
+    {
+        dd('@todo');
+    }
 }

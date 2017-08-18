@@ -2,9 +2,6 @@
 
 namespace App;
 
-use App\Author;
-use App\Post;
-use App\Services\Twitter\Client as Twitter;
 use Exception;
 
 class PostFactory

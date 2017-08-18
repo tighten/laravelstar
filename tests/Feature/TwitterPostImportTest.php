@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use App\Author;
 use App\Post;
 use App\User;
-use App\Services\Twitter;
+use App\Services\Twitter\Client as Twitter;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;

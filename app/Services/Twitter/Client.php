@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Twitter;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 
-class Twitter
+class Client
 {
     private $client;
 

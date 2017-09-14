@@ -66,4 +66,9 @@ class Post extends Model
     {
         return $this->interactors()->where('type', 'like');
     }
+
+    public function readers()
+    {
+        return $this->interactors()->where('type', 'read');
+    }
 }

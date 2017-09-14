@@ -60,4 +60,21 @@ class User extends Authenticatable
             'post_id' => $post->id,
         ]);
     }
+
+    public function reads()
+    {
+        return $this->hasMany(Read::class);
+    }
+
+    public function read($post)
+    {
+        return $this->reads()->create([
+            'post_id' => $post->id,
+        ]);
+    }
+
+    public function unreadPosts()
+    {
+       dd('@todo write User@unreadPosts'); 
+    }
 }

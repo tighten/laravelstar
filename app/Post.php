@@ -18,27 +18,15 @@ class Post extends Model
         return $this->hasMany(Submission::class);
     }
 
-    public function submitters()
-    {
-        return User::select('users.*')
-            ->join('submissions', 'users.id', '=', 'submissions.user_id')
-            ->where('submissions.post_id', $this->id);
-    }
-
-    public function getSubmittersAttribute()
-    {
-        return $this->submitters()->get();
-    }
-
     public function getOriginatorAttribute()
     {
         return $this->submitters()->first();
     }
 
-//    public function submitters()
-//    {
-//        return $this->hasManyThrough(User::class, Submission::class, 'post_id', 'id');
-//    }
+    public function submitters()
+    {
+        return $this->belongsToMany(User::class, 'submissions');
+    }
 
     public static function makeFromManualSubmission($request)
     {
@@ -69,8 +57,13 @@ class Post extends Model
         });
     }
 
+    public function interactors()
+    {
+        return $this->belongsToMany(User::class, 'interactions');
+    }
+
     public function likers()
     {
-        dd('@todo');
+        return $this->interactors()->where('type', 'like');
     }
 }

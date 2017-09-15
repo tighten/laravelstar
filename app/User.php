@@ -73,8 +73,14 @@ class User extends Authenticatable
         ]);
     }
 
+    // @todo can this be a relationship instead of this janky thing?
     public function unreadPosts()
     {
-       dd('@todo write User@unreadPosts'); 
+        return Post::whereNotIn('id', $this->reads()->pluck('post_id'));
+    }
+
+    public function getUnreadPostsAttribute()
+    {
+        return $this->unreadPosts()->get();
     }
 }

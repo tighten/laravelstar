@@ -54,7 +54,8 @@ class UserInteractingWithPostsTest extends TestCase
         $user->read($post3);
 
         $this->assertEquals(2, $user->unreadPosts()->count()); 
-        $this->assertTrue($user->unreadPosts->pluck('post_id')->contains($post1->id));
-        $this->assertTrue($user->unreadPosts->pluck('post_id')->contains($post2->id));
+        $this->assertTrue($user->unreadPosts->pluck('id')->contains($post1->id));
+        $this->assertTrue($user->unreadPosts->pluck('id')->contains($post2->id));
+        $this->assertFalse($user->unreadPosts->pluck('id')->contains($post3->id));
     }
 }

@@ -4,12 +4,14 @@ namespace Tests;
 
 use App\Services\Twitter\Client as Twitter;
 use Faker\Generator as Faker;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Laravel\BrowserKitTesting\TestCase as BaseTestCase;
 use Mockery as m;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
+
+    protected $baseUrl = 'http://localhost/';
 
     protected function mockTwitter()
     {

@@ -12,3 +12,4 @@
 - [ ] Basic user signup
 - [ ] Basic user profiles
 - [ ] Add tests and functionality around authors
+- [ ] Upgrade to Laravel 5.5

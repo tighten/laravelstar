@@ -4,6 +4,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('posts', function () {
-    return App\Post::all();
+Route::group(['prefix' => 'posts', 'as' => 'posts.'], function () {
+    Route::get('/', function () {
+        return App\Post::all();
+    })->name('index');
 });

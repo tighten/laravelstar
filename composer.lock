@@ -5323,16 +5323,16 @@
         },
         {
             "name": "tightenco/tlint",
-            "version": "v5.0.8",
+            "version": "v5.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tighten/tlint.git",
-                "reference": "f85dc227d30bcd7f2c36c25266eb1edd75789fe5"
+                "reference": "96d314d77108d05e0918fe93b836eaa6c0b9ea96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tighten/tlint/zipball/f85dc227d30bcd7f2c36c25266eb1edd75789fe5",
-                "reference": "f85dc227d30bcd7f2c36c25266eb1edd75789fe5",
+                "url": "https://api.github.com/repos/tighten/tlint/zipball/96d314d77108d05e0918fe93b836eaa6c0b9ea96",
+                "reference": "96d314d77108d05e0918fe93b836eaa6c0b9ea96",
                 "shasum": ""
             },
             "require": {
@@ -5371,9 +5371,9 @@
             "homepage": "https://github.com/tighten/tlint",
             "support": {
                 "issues": "https://github.com/tighten/tlint/issues",
-                "source": "https://github.com/tighten/tlint/tree/v5.0.8"
+                "source": "https://github.com/tighten/tlint/tree/v5.0.9"
             },
-            "time": "2020-11-25T17:11:32+00:00"
+            "time": "2021-01-13T13:59:26+00:00"
         },
         {
             "name": "tightenco/ziggy",

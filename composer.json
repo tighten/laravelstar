@@ -12,17 +12,17 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "inertiajs/inertia-laravel": "^0.3.5",
+        "inertiajs/inertia-laravel": "^0.5",
         "laravel/framework": "^8.79",
         "laravel/jetstream": "^2.1",
-        "laravel/sanctum": "^2.6",
+        "laravel/sanctum": "^2.13",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.2",
+        "laravel/ui": "^3.4",
         "tightenco/tlint": "^5.0",
-        "tightenco/ziggy": "^1.0"
+        "tightenco/ziggy": "^1.4"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.5",
+        "barryvdh/laravel-debugbar": "^3.6",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "friendsofphp/php-cs-fixer": "^2.17",
@@ -30,7 +30,7 @@
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^5.10",
         "phpunit/phpunit": "^9.5.10",
-        "squizlabs/php_codesniffer": "^3.5"
+        "squizlabs/php_codesniffer": "^3.6"
     },
     "config": {
         "optimize-autoloader": true,
